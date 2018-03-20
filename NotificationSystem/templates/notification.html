@@ -1,0 +1,316 @@
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+    {% load static %}
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>Notification System</title>
+   
+    <link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet">
+    
+    <link href="{% static '../static/css/animate.css' %}" rel="stylesheet">
+   
+    <link href="{% static '../static/css/sidebar-nav.min.css' %}" rel="stylesheet">
+   
+    <link href="{% static '../static/bower_components/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+   
+    <link href="{% static '../static/css/animate.css' %}" rel="stylesheet" >
+    
+    <link href="{% static '../static/css/style.css' %}" rel="stylesheet">
+    
+    <link href="{% static '../static/css/colors/blue-dark.css' %}" id="theme" rel="stylesheet">
+    <style type="text/css">
+        .modal.modal-wide .modal-dialog {
+          width: 90%;
+        }
+        .modal-wide .modal-body {
+          overflow-y: auto;
+        }
+
+        /* irrelevant styling */
+        body { text-align: center; }
+        body p { 
+          max-width: 400px; 
+          margin: 20px auto; 
+        }
+#tallModal .modal-body p { margin-bottom: 900px }
+    </style>
+   
+</head>
+
+<body class="fix-header">
+    
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+    
+    <div id="wrapper">
+        
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" >
+                       <b>
+                        <img src="{% static '../static/images/Iiitdmj-logo.png' %}" alt="home" class="dark-logo" height="60px" width="180px" /><img src="{% static '../static/images/Iiitdmj-logo.jpg' %}" alt="home" class="light-logo" />
+                     </b>
+                       </a>
+                </div>
+                
+                <ul class="nav navbar-top-links navbar-left">
+                    <li><a href="javascript:void(0)" class="open-close waves-effect waves-light visible-xs"><i class="ti-close ti-menu"></i></a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"> <i class="mdi mdi-gmail"></i>
+                        {% if flag == True %}
+                            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div> {% endif %}
+                        </a>
+                        <ul class="dropdown-menu mailbox animated bounceInDown">
+                            <li>
+                                <div class="drop-title">notifications</div>
+                            </li>
+                            <li>{% for key, value in message.items %}
+                                {% if value.read %}
+                                <li role="separator" class="divider"></li>
+                                 <div class="message-center"> 
+
+                                        <div class="user-img"> <img src="{% static '../static/images/truck.jpg' %}" alt="user" class="img-circle">  </div>
+                                        <div class="mail-contnet">
+                                            <h5>{{ value.truck_name }}</h5> <span class="mail-desc"> {{ value.certificate_name }} certificate will expire  within {{value.days}} days </span><span>{{ value.time}}</span></div>
+
+                                </div>
+                                {% else %}
+                                <li role="separator" class="divider"></li>
+                                <div class="message-center" id="notification" onclick="read_notification('{{ key }}')" style="background-color: #BEBEBE">
+
+                                        <div class="user-img"> <img src="{% static '../static/images/truck.jpg' %}" alt="user" class="img-circle"> </div>
+                                        <div class="mail-contnet">
+                                            <h5 style="font-weight:bold">{{ value.truck_name }}</h5> <span class="mail-desc"> {{ value.certificate_name }} certificate will expire within {{value.days}} days </span><span>{{ value.time}}</span></div>
+
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                        
+                    </li>
+  
+                   
+                </ul>
+
+
+
+
+
+
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{% static '../static/images/user.jpg' %}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">NAADAN</b><span class="caret"></span> </a>
+                        <ul class="dropdown-menu dropdown-user animated flipInY">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img"><img src="{% static '../static/images/user.jpg' %}" alt="user" /></div>
+                                    <div class="u-text"><h4>NAADAN</h4><p class="text-muted">user@abc.com</p><a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout/"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+             
+                    </li>
+                    
+  
+                </ul>
+            </div>
+            
+        </nav>
+        
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav slimscrollsidebar">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
+                <ul class="nav" id="side-menu">
+                    <li class="user-pro">
+                        <a href="#" class="waves-effect"><img src="{% static '../static/images/user.jpg' %}" alt="user-img" class="img-circle"> <span class="hide-menu">NAADAN<span class="fa arrow"></span></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                            <li><a href="javascript:void(0)"><i class="ti-user"></i> <span class="hide-menu">My Profile</span></a></li>
+                            <li><a href="javascript:void(0)"><i class="fa fa-power-off"></i> <span class="hide-menu">Logout</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+        
+            </div>
+        </div>
+       
+       
+
+
+
+    <div id="page-wrapper">
+    <br> 
+        <div class="container">
+        <center>
+        <div class="row well" style="width: 50%">
+           <center>
+                <h2><strong>Register Your Vehicle</strong></h2>
+                <a data-toggle="modal" href="#shortModal" class="btn btn-primary btn-block">Register</a>
+           </center>
+            
+        </div>
+        </center>
+        
+      
+        </div>
+               
+               
+                <form class="form-horizontal" action="/notification/add-vehicle/" method="POST">
+                    {% csrf_token %}
+              <div id="shortModal" class="modal modal-wide fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">New Registration</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+
+                        <table class="table table-bordered table-inverse">
+                            <tr>
+                                <td><label>Name:</label></td>
+                                <td><input type="text" class="form-control" name="vehicle-name" id="vehicle-name" placeholder="eg.Truck001" required></td>
+                            </tr>
+                            <tr>
+                                <td><label>Registration Name</label></td>
+                                <td> <input type="text" class="form-control" name="registration-number" id="registration-number" placeholder="eg.UP79A8817" required></td>
+                            </tr>
+                               
+                            <tr>
+                                 <td><label>Pollution Certificate Expire Date</label></td>
+                                <td> <input type="Date" class="form-control" name="pollution-certificate" id="pollution-certificate" required></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Fitness Certificate Expire Date</label>
+                                </td>
+                                <td>
+                                    <input type="Date" class="form-control" name="fitness-certificate" id="fitness-certificate" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <label>Insurance Certificate Expire Date</label>
+                                </td>
+                                <td>
+                                    <input type="Date" class="form-control" name="insurance-certificate" id="insurance-certificate"
+                                required>
+                                </td>
+                            </tr>
+                        </table>
+                            
+
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div>
+            </form>             
+    </div>
+
+        
+     
+    </div>
+
+    <!-- jQuery -->
+    {% block js %}
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script type="text/javascript">
+
+        //Alerts
+        $(".modal-wide").on("show.bs.modal", function() {
+          var height = $(window).height() - 200;
+          $(this).find(".modal-body").css("max-height", height);
+        });    
+
+        function read_notification (id) {
+           
+            id = id;
+            $.ajax({
+                type: 'POST',
+                url: '/notification/read-notification/',
+                data: {
+                    'id' : id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    alert("read successfully");
+                    $('#notification-'+id+']').style('background-color : blue');
+                },
+                error: function(data, err) {
+                    alert("error");
+                }
+            });
+        };
+
+        function add_vehicle (id) {
+            id = id;
+            $.ajax({
+                type: 'POST',
+                url: '/notification/read-notification/',
+                data: {
+                    'id' : id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    alert("read successfully");
+                    $('#notification-'+id+']').style('background-color : blue');
+                },
+                error: function(data, err) {
+                    alert("error");
+                }
+            });
+        };
+
+        
+
+    </script>
+    <script src="{% static '../static/bower_components/jquery/dist/jquery.min.js' %}"></script>
+   
+    <script src="{% static '../static/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+  
+    <script src="{% static '../static/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+   
+    <script src="{% static '../static/js/jquery.slimscroll.js' %}"></script>
+   
+    <script src="{% static '../static/js/waves.js' %}"></script>
+    <script src="{% static '../static/bower_components/toast-master/js/jquery.toast.js' %}"></script>
+    <script src="{% static '../static/js/toastr.js' %}"></script>
+    
+  
+    
+    <script src="{% static '../static/js/custom.min.js' %}"></script>
+   
+    <script src="{% static '../static/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    
+    {% endblock js %}
+</body>
+
+
+
+</html>

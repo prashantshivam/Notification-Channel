@@ -1,0 +1,88 @@
+<!DOCTYPE html>  
+<html lang="en">
+
+
+<head>
+{% load staticfiles %}
+{% load static %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Notification System Login</title>
+
+<link href="{% static '../static/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<link href="{% static '../static/css/animate.css' %}" rel="stylesheet">
+
+
+<link href="{% static '../static/css/colors/default.css' %}" id="theme"  rel="stylesheet">
+
+
+</head>
+<body>
+
+<div class="preloader">
+  <div class="cssload-speeding-wheel"></div>
+</div>
+<section id="wrapper" class="new-login-register">
+      <div class="new-login-box">
+                <div class="white-box">
+                  <div class="col-xs-6 col-md-offset-5">
+                    <h3 class="box-title m-b-0">Sign</h3>
+                    <small>Enter your details below</small>
+                  </div>  
+                  <form class="form-horizontal new-lg-form" id="loginform" action="/notification/login1/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group  m-t-20">
+                      <div class="col-xs-6 col-md-offset-3">
+                        <label>Username</label>
+                        <input class="form-control" type="text" required="" placeholder="Username" name="username" id="username">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-6 col-md-offset-3">
+                        <label>Password</label>
+                        <input class="form-control" type="password" required="" placeholder="Password" name="password" id="password">
+                      </div>
+                    </div>
+
+                    <div class="form-group text-center m-t-20">
+                      <div class="col-xs-6 col-md-offset-3">
+                        <button class="btn btn-info btn-md  btn-rounded text-uppercase waves-effect waves-light" type="submit">Log In</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      
+                    </div>
+                    <div class="form-group m-b-0">
+                      <div class="col-sm-12 text-center">
+                        <p>Don't have an account? <a href="register.html" class="text-primary m-l-5"><b>Sign Up</b></a></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+      </div>            
+  
+  
+</section>
+<!-- jQuery -->
+<script src="{% static '../static/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static '../static/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- Menu Plugin JavaScript -->
+<script src="{% static '../static/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+
+<!--slimscroll JavaScript -->
+<script src="{% static '../static/js/jquery.slimscroll.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static '../static/js/waves.js' %}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{% static '../static/js/custom.min.js' %}"></script>
+<!--Style Switcher -->
+<script src="{% static '../static/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+</body>
+
+
+</html>
